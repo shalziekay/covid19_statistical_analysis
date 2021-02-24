@@ -1,4 +1,4 @@
-lab_2
+COVID-19 Case Rate and Shelter in Place Statistical Analysis
 ==============================
 This project was completed by the following team:
 Swetha Pola, Shalini Kunapuli, Richard Du, Josh Archer
