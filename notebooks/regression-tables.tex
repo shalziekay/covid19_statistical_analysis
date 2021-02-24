@@ -1,0 +1,74 @@
+
+\documentclass[14pt]{extarticle}
+\usepackage{extsizes}
+\usepackage{times}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,margin=0cm,footskip=.5cm]{geometry}
+\usepackage{pdflscape}
+\usepackage{setspace}
+\usepackage{attachfile}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\setlength{\parindent}{0cm}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{hyperref, xcolor}
+\usepackage{nopageno}
+\title{Lab 2 Regression Tables (w203)}
+\author{SWOSHARD -- Swetha Pola, Shalini Kunapuli, Richard Du, Josh Archer}
+\date{Last compiled: \today}
+
+\begin{document}
+
+
+
+
+
+
+\begin{landscape}
+
+
+
+
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lcccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{4}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-5} 
+\\[-1.8ex] & \multicolumn{4}{c}{Log Cases Per 100K from Oct 24th to Oct 30th} \\ 
+\\[-1.8ex] & (1) & (2) & (3) & (4)\\ 
+\hline \\[-1.8ex] 
+ Instituted SIP & $-$0.781$^{***}$ & $-$0.650$^{***}$ & $-$0.623$^{***}$ & $-$0.586$^{***}$ \\ 
+  & (0.207) & (0.206) & (0.199) & (0.200) \\ 
+  & & & & \\ 
+ Mobility for the week of 10-10-2020\\ (workplaces) &  & 0.043$^{***}$ & 0.042$^{***}$ & 0.038$^{***}$ \\ 
+  &  & (0.015) & (0.016) & (0.015) \\ 
+  & & & & \\ 
+ No Face Mask Mandate \\ (Dummy) &  &  & 0.113 & $-$0.023 \\ 
+  &  &  & (0.196) & (0.231) \\ 
+  & & & & \\ 
+ No Face Mask Mandate for Employees \\ (Dummy) &  &  &  & 0.424 \\ 
+  &  &  &  & (0.285) \\ 
+  & & & & \\ 
+ Constant & 3.797$^{***}$ & 4.579$^{***}$ & 4.499$^{***}$ & 4.397$^{***}$ \\ 
+  & (0.175) & (0.309) & (0.356) & (0.343) \\ 
+  & & & & \\ 
+\hline \\[-1.8ex] 
+Observations & 51 & 51 & 51 & 51 \\ 
+R$^{2}$ & 0.193 & 0.297 & 0.301 & 0.326 \\ 
+Adjusted R$^{2}$ & 0.177 & 0.267 & 0.257 & 0.267 \\ 
+Residual Std. Error & 0.669 (df = 49) & 0.631 (df = 48) & 0.636 (df = 47) & 0.631 (df = 46) \\ 
+F Statistic & 11.742$^{***}$ (df = 1; 49) & 10.118$^{***}$ (df = 2; 48) & 6.762$^{***}$ (df = 3; 47) & 5.559$^{***}$ (df = 4; 46) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{4}{l}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+ & \multicolumn{4}{l}{Using Robust Standard Errors: \texttt{sandwich::vcovHC(model, type = "HC1")} in R} \\ 
+\end{tabular} 
+\end{table} 
+
+\end{landscape}
+\end{document}

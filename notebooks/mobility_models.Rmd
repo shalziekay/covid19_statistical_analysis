@@ -1,0 +1,48 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+ 
+
+```{r}
+library(tidyverse)
+library(stargazer)
+data <- read_rds("~/lab_2-swoshard/data/processed/main_state_data.RDS")
+# Colnames: replace spaces with underscore,
+# remove parantheses, metacharacters () must be enclosed in []
+colnames(data) <- gsub(" ", "_", colnames(data))
+colnames(data) <- gsub("[()]", "", colnames(data))
+
+```
+
+```{r}
+lm0 = lm(data$Case.Rate.per.100000.in.Last.7.Days ~ data$workplaces_2020.10.10 + data$workplaces_2020.10.17, data = data)
+lm1 = lm(data$Case.Rate.per.100000.in.Last.7.Days ~ data$workplaces_2020.10.17, data = data)
+baseline = lm(data$Case.Rate.per.100000.in.Last.7.Days ~ data$workplaces_2020.10.10, data = data)
+
+#these first 3 models showed us that 10/10 and 10/17 are HIGHLY correlated. we choose to move forward with 10/10 bc intuition of 10/10 being 2 weeks before week of 10/26
+
+lm2 = lm(data$Case.Rate.per.100000.in.Last.7.Days ~ data$workplaces_2020.10.05 + data$workplaces_2020.10.10 + data$workplaces_2020.10.17 + data$transit_2020.10.05 + data$transit_2020.10.10 + data$transit_2020.10.17, data = data)
+
+lm3 = lm(data$Case.Rate.per.100000.in.Last.7.Days ~ data$workplaces_2020.10.05 + data$workplaces_2020.10.10 + data$workplaces_2020.10.17 + data$transit_2020.10.05 + data$transit_2020.10.10 + data$transit_2020.10.17 + data$retail_rec_2020.10.05 + data$retail_rec_2020.10.10 + data$retail_rec_2020.10.17, data = data)
+
+lm3 = lm(data$Case.Rate.per.100000.in.Last.7.Days ~  data$workplaces_2020.10.10 + data$workplaces_2020.10.17 + data$transit_2020.10.10 + data$transit_2020.10.17 + data$retail_rec_2020.10.10 + data$retail_rec_2020.10.17, data = data)
+
+lm4 = lm(data$Case.Rate.per.100000.in.Last.7.Days ~  data$workplaces_2020.10.10 + data$workplaces_2020.10.17, data = data)
+
+lm5 = lm(data$Case.Rate.per.100000.in.Last.7.Days ~  data$workplaces_2020.10.10 + data$NoSIP, data = data) #YAY this is model 2
+
+lm6 = lm(data$Case.Rate.per.100000.in.Last.7.Days ~  data$workplaces_2020.10.10 + data$NoSIP + data$Population.density.per.square.miles, data = data) #population density does not help compared to lm5
+
+lm7 = lm(data$Case.Rate.per.100000.in.Last.7.Days ~  data$workplaces_2020.10.10 + data$NoSIP + data$Number.Homeless..2019., data = data) #nope
+
+lm8 = lm(data$Case.Rate.per.100000.in.Last.7.Days ~  data$workplaces_2020.10.10 + data$NoSIP + data$Medicaid.Expenditures.as.a.Percent.of.Total.State.Expenditures.by.Fund, data = data)  #kinda works in addition, shows robustness of our model... but we are still unclear on what % of total expense by Fund means MODEL 3
+
+
+#lm9 = lm(data$Case.Rate.per.100000.in.Last.7.Days ~  data$workplaces_2020.10.10 + data$NoSIP + , data = data)  
+
+
+summary(lm8)
+anova(lm5, lm8, test = 'F')
+```
+

@@ -1,0 +1,62 @@
+---
+title: "Models"
+output:
+  pdf_document: default
+  pdf_notebook: default
+---
+
+```{r setup, message=F, warning=F, results=F}
+library(tidyverse)
+library(stargazer)
+library(sandwich)
+data <- read_rds("../data/processed/main_state_data.RDS")
+
+## All below done in Python Now ##
+#################################
+# Colnames: replace spaces with underscore,
+# remove parantheses, metacharacters () must be enclosed in []
+#colnames(data) <- gsub(" ", "_", colnames(data))
+#colnames(data) <- gsub("[()]", "", colnames(data))
+
+head(data)
+```
+
+```{r initial-models}
+data$NoFaceMaskEmploy
+
+lm1 <- lm(log(Case.Rate.per.100000.in.Last.7.Days) ~ SIP, data = data)
+
+lm2 <- lm(log(Case.Rate.per.100000.in.Last.7.Days) ~ SIP + workplaces_2020.10.10, data = data)
+
+lm3 <- lm(log(Case.Rate.per.100000.in.Last.7.Days) ~ SIP + workplaces_2020.10.10 + NoFaceMask, data = data)
+
+
+lm4 <- lm(log(Case.Rate.per.100000.in.Last.7.Days) ~ SIP + workplaces_2020.10.10 + NoFaceMask + NoFaceMaskEmploy, data = data)
+
+cov1 <- vcovHC(lm1, type = "HC1")
+robust_se1 <- sqrt(diag(cov1))
+
+cov2 <- vcovHC(lm2, type = "HC1")
+robust_se2 <- sqrt(diag(cov2))
+
+cov3 <- vcovHC(lm3, type = "HC1")
+robust_se3 <- sqrt(diag(cov3))
+
+cov4 <- vcovHC(lm4, type = "HC1")
+robust_se4 <- sqrt(diag(cov4))
+
+# Produce initial stargazer table
+# Copy results to regression-tables.tex, 
+# Change covariate names, etc, then produce 
+# regression-tables.pdf which will knit into
+# draft report
+stargazer(lm1,
+          lm2,
+          lm3,
+          lm4, se = list(robust_se1, robust_se2, robust_se3, robust_se4),
+          notes.append = TRUE, notes.align = "l",
+          notes = "This will be replaced")
+
+sandwich::vcovHC
+
+```
